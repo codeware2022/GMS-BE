@@ -1,5 +1,11 @@
+// export const environment = {
+//   production: true,
+//   baseUrl: '',
+//   useHash: false,
+// };
+
 export const environment = {
-  production: true,
-  baseUrl: '',
-  useHash: false,
+  production : true,
+  appUrl : '',
+  userKey : 'identityAppUser'
 };

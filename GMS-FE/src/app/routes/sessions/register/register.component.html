@@ -10,9 +10,30 @@
     <mat-card-content>
       <form class="form-field-full" [formGroup]="registerForm">
         <mat-form-field appearance="outline">
-          <mat-label>{{'username' | translate}}</mat-label>
-          <input matInput formControlName="username" required>
-          @if (registerForm.get('username')?.invalid) {
+          <mat-label>{{'firstname' | translate}}</mat-label>
+          <input matInput formControlName="firstName" required>
+          @if (registerForm.get('firstName')?.invalid) {
+            <mat-error>
+              <span>{{'validations.required' | translate}}</span>
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{'lastName' | translate}}</mat-label>
+          <input matInput formControlName="lastName" required>
+          @if (registerForm.get('lastName')?.invalid) {
+            <mat-error>
+              <span>{{'validations.required' | translate}}</span>
+            </mat-error>
+          }
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{'email' | translate}}</mat-label>
+          <input matInput formControlName="email" required>
+          @if (registerForm.get('email')?.invalid) {
             <mat-error>
               <span>{{'validations.required' | translate}}</span>
             </mat-error>
@@ -47,7 +68,7 @@
 
         <mat-checkbox>{{'read_and_agree' | translate}}</mat-checkbox>
 
-        <button class="w-full m-y-16" mat-raised-button color="primary">
+        <button class="w-full m-y-16" mat-raised-button color="primary" (click)="registerUser()">
           {{'register' | translate}}
         </button>
 

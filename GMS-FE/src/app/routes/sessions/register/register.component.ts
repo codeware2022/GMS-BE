@@ -13,6 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { log } from 'console';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-register',
@@ -34,16 +36,20 @@ import { TranslateModule } from '@ngx-translate/core';
 export class RegisterComponent {
   registerForm = this.fb.nonNullable.group(
     {
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
+      firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      email: ['', [Validators.required, Validators.pattern('^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$')]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]],
     },
     {
       validators: [this.matchValidator('password', 'confirmPassword')],
     }
   );
 
-  constructor(private fb: FormBuilder) {}
+  Submitted = false;
+  errorMessages: string[] = [];
+  constructor(private fb: FormBuilder,private accountService : AccountService) {}
 
   matchValidator(source: string, target: string) {
     return (control: AbstractControl) => {
@@ -60,5 +66,22 @@ export class RegisterComponent {
         return null;
       }
     };
+  }
+
+  registerUser(){
+    this.Submitted = true;
+    this.errorMessages = [];
+    delete this.registerForm.value.confirmPassword;
+    var formValue = this.registerForm.value;
+    // this.accountService.register(formValue).subscribe({
+    //   next : (res) => {
+
+    //   },
+    //   error : () => {
+
+    //   }
+    // })
+
+    console.log(this.registerForm.value);
   }
 }
